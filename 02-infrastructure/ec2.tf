@@ -93,6 +93,7 @@ resource "aws_launch_template" "challenge_launch_template" {
       delete_on_termination = true
       volume_size           = 8
       volume_type           = "gp3"
+      encrypted             = true
     }
   }
 

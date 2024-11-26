@@ -72,6 +72,7 @@ resource "aws_autoscaling_group" "challenge_flask_asg" {
   min_size            = 2
   health_check_type   = "ELB"
   health_check_grace_period = 30
+  default_cooldown    = 30
 
   target_group_arns   = [aws_lb_target_group.challenge_alb_tg.arn]
 

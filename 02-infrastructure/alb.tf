@@ -35,3 +35,8 @@ resource "aws_lb_listener" "http_listener" {
     target_group_arn = aws_lb_target_group.challenge_alb_tg.arn
   }
 }
+
+# Output Load Balancer DNS name
+output "challenge_dns_name" {
+  value = aws_lb.challenge_alb.dns_name
+}
