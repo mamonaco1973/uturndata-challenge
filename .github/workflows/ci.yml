@@ -26,7 +26,7 @@ jobs:
             cd ./01-infrastructure
             terraform init
             terraform validate
-            echo "Validate" completed successfully"
+            echo "Validate completed successfully"
 
       - name: Terraform Plan
         run: |
