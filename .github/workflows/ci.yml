@@ -24,7 +24,8 @@ jobs:
           export AWS_SECRET_ACCESS_KEY="${{ secrets.AWS_SECRET_ACCESS_KEY }}"
           cd ./01-infrastructure
           pwd
-          env
+          #env
+          aws --version
           # terraform init
           # terraform plan -out=tfplan
           echo "Plan completed successfully"
