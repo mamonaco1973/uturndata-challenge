@@ -66,6 +66,8 @@ jobs:
             export AWS_DEFAULT_REGION="us-east-2"
             dns_name=$(aws elbv2 describe-load-balancers --query "LoadBalancers[?LoadBalancerName=='challenge-alb'].DNSName" --output text)
             echo $dns_name
+            cd ./02-packer/scripts
+            ./test_candidates.py $dns_name
 
           
 
