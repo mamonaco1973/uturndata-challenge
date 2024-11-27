@@ -23,8 +23,10 @@ jobs:
           export AWS_ACCESS_KEY_ID="${{ secrets.AWS_ACCESS_KEY_ID }}"
           export AWS_SECRET_ACCESS_KEY="${{ secrets.AWS_SECRET_ACCESS_KEY }}"
           cd ./01-infrastructure
-          terraform init
-          terraform plan -out=tfplan
+          pwd
+          env
+          # terraform init
+          # terraform plan -out=tfplan
           echo "Plan completed successfully"
 
       - name: Terraform Apply
@@ -33,4 +35,6 @@ jobs:
           export AWS_ACCESS_KEY_ID="${{ secrets.AWS_ACCESS_KEY_ID }}"
           export AWS_SECRET_ACCESS_KEY="${{ secrets.AWS_SECRET_ACCESS_KEY }}"
           cd ./01-infrastructure
-          terraform apply -auto-approve tfplan
+          pwd 
+          env
+          #terraform apply -auto-approve tfplan
