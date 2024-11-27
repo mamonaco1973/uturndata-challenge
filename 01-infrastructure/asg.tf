@@ -1,6 +1,12 @@
 
 # Create Auto Scaling Group
 
+# Use the try function to default to a specific AMI if "flask-server-ami" doesn't exist
+variable "asg_instances" {
+  default = 0
+}
+
+
 # Create CloudWatch Alarm for scaling up when CPUUtilization > 80%
 resource "aws_cloudwatch_metric_alarm" "cpu_high" {
   alarm_name          = "HighCPUUtilization"
@@ -67,9 +73,9 @@ resource "aws_autoscaling_group" "challenge_flask_asg" {
 
   name                = "challenge-flask-asg"
   vpc_zone_identifier = [aws_subnet.challenge-subnet-1.id, aws_subnet.challenge-subnet-2.id] 
-  desired_capacity    = 2
+  desired_capacity    = var.asg_instances
   max_size            = 4
-  min_size            = 2
+  min_size            = var.asg_instances
   health_check_type   = "ELB"
   health_check_grace_period = 30
   default_cooldown    = 30
