@@ -29,8 +29,7 @@ jobs:
           aws --version
           aws s3 ls
           terraform init
-          # terraform init
-          # terraform plan -out=tfplan
+          terraform plan
           echo "Plan completed successfully"
 
       - name: Terraform Apply
