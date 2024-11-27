@@ -6,14 +6,14 @@ resource "aws_lb" "challenge_alb" {
   internal           = false
   load_balancer_type = "application"
   security_groups    = [aws_security_group.challenge_sg_http.id]
-  subnets            = [aws_subnet.challenge-subnet-1.id, aws_subnet.challenge-subnet-2.id] 
+  subnets            = [aws_subnet.challenge-subnet-1.id, aws_subnet.challenge-subnet-2.id]
 }
 
 resource "aws_lb_target_group" "challenge_alb_tg" {
-  name        = "challenge-alb-tg"
-  port        = 8000
-  protocol    = "HTTP"
-  vpc_id      = aws_vpc.challenge-vpc.id
+  name     = "challenge-alb-tg"
+  port     = 8000
+  protocol = "HTTP"
+  vpc_id   = aws_vpc.challenge-vpc.id
 
   health_check {
     path                = "/gtg"

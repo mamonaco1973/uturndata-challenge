@@ -49,7 +49,7 @@ resource "aws_subnet" "challenge-subnet-1" {
 
 resource "aws_subnet" "challenge-subnet-2" {
   vpc_id                  = aws_vpc.challenge-vpc.id
- cidr_block              = "10.0.0.64/26" # Subnet B CIDR block
+  cidr_block              = "10.0.0.64/26" # Subnet B CIDR block
   map_public_ip_on_launch = true
   availability_zone       = "us-east-2b" # Replace with your region's AZ
   tags = {
@@ -72,9 +72,9 @@ resource "aws_route_table_association" "public_rta_2" {
 # Create the DynamoDB Gateway VPC Endpoint
 
 resource "aws_vpc_endpoint" "dynamodb_endpoint" {
-  vpc_id             = aws_vpc.challenge-vpc.id
-  service_name       = "com.amazonaws.us-east-2.dynamodb" # Adjust to your region
-  vpc_endpoint_type  = "Gateway"
+  vpc_id            = aws_vpc.challenge-vpc.id
+  service_name      = "com.amazonaws.us-east-2.dynamodb" # Adjust to your region
+  vpc_endpoint_type = "Gateway"
 
   # Attach to the route table
   route_table_ids = [

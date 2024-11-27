@@ -71,16 +71,17 @@ resource "aws_autoscaling_group" "challenge_flask_asg" {
     version = "$Latest"
   }
 
-  name                = "challenge-flask-asg"
-  vpc_zone_identifier = [aws_subnet.challenge-subnet-1.id, aws_subnet.challenge-subnet-2.id] 
-  desired_capacity    = var.asg_instances
-  max_size            = 4
-  min_size            = var.asg_instances
-  health_check_type   = "ELB"
+  name                      = "challenge-flask-asg"
+  vpc_zone_identifier       = [aws_subnet.challenge-subnet-1.id, aws_subnet.challenge-subnet-2.id]
+  desired_capacity          = var.asg_instances
+  max_size                  = 4
+  min_size                  = var.asg_instances
+  health_check_type         = "ELB"
   health_check_grace_period = 30
-  default_cooldown    = 30
+  default_cooldown          = 30
+  default_instance_warmup   = 60
 
-  target_group_arns   = [aws_lb_target_group.challenge_alb_tg.arn]
+  target_group_arns = [aws_lb_target_group.challenge_alb_tg.arn]
 
   tag {
     key                 = "Name"

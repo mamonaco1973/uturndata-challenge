@@ -33,7 +33,7 @@ resource "aws_security_group" "challenge_sg_http" {
   name        = "challenge-sg-http"
   description = "Security group to allow port 80 access and open all outbound traffic"
   vpc_id      = aws_vpc.challenge-vpc.id
-  
+
   # Ingress rule to allow SSH (port 22) from anywhere
   ingress {
     from_port   = 80

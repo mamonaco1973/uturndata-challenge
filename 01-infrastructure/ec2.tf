@@ -13,7 +13,7 @@ resource "aws_iam_instance_profile" "ec2_instance_profile" {
 #   key_name      = "challenge-key"
 #   instance_type = "t2.micro"
 #   subnet_id     = aws_subnet.challenge-subnet-1.id
-  
+
 #   # Assign a public IP
 #   associate_public_ip_address = true
 
@@ -24,7 +24,7 @@ resource "aws_iam_instance_profile" "ec2_instance_profile" {
 #   ]
 
 #   # Attach the Instance Profile
-  
+
 #   iam_instance_profile = aws_iam_instance_profile.ec2_instance_profile.name
 
 #   # Include the user data script
@@ -50,7 +50,7 @@ resource "aws_iam_instance_profile" "ec2_instance_profile" {
 #   key_name      = "challenge-key"
 #   instance_type = "t2.micro"
 #   subnet_id     = aws_subnet.challenge-subnet-2.id
-  
+
 #   # Assign a public IP
 #   associate_public_ip_address = true
 
@@ -61,7 +61,7 @@ resource "aws_iam_instance_profile" "ec2_instance_profile" {
 #   ]
 
 #   # Attach the Instance Profile
-  
+
 #   iam_instance_profile = aws_iam_instance_profile.ec2_instance_profile.name
 
 #   # Include the user data script
@@ -100,9 +100,9 @@ variable "default_ami" {
 # Create a launch template to create new instances in the autoscaling group
 
 resource "aws_launch_template" "challenge_launch_template" {
-  name          = "challenge_launch_template"
-  description   = "Launch template for autoscaling"
-  
+  name        = "challenge_launch_template"
+  description = "Launch template for autoscaling"
+
   block_device_mappings {
     device_name = "/dev/xvda"
 
@@ -117,11 +117,11 @@ resource "aws_launch_template" "challenge_launch_template" {
   network_interfaces {
     associate_public_ip_address = true
     delete_on_termination       = true
-    
-   # Add security groups
+
+    # Add security groups
     security_groups = [
-    aws_security_group.challenge_sg_ssh.id,
-    aws_security_group.challenge_sg_flask.id
+      aws_security_group.challenge_sg_ssh.id,
+      aws_security_group.challenge_sg_flask.id
     ]
   }
 
@@ -129,10 +129,10 @@ resource "aws_launch_template" "challenge_launch_template" {
     name = aws_iam_instance_profile.ec2_instance_profile.name
   }
 
-  instance_type   = "t2.micro"
-  key_name        = "challenge-key"
-  image_id        =  var.default_ami  
-  
+  instance_type = "t2.micro"
+  key_name      = "challenge-key"
+  image_id      = var.default_ami
+
   user_data = base64encode(file("./scripts/bootstrap.sh"))
 
   tag_specifications {
