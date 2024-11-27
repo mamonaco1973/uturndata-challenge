@@ -26,7 +26,7 @@ jobs:
             cd ./01-infrastructure
             terraform init
             terraform validate
-            echo "Validate completed successfully"
+            echo "NOTE: Terraform validate completed successfully."
     
       - name: Terraform Plan
         run: |
@@ -36,7 +36,7 @@ jobs:
           cd ./01-infrastructure
           terraform init
           terraform plan
-          echo "Plan completed successfully"
+          echo "NOTE: Terraform plan completed successfully."
 
       - name: Setup Packer
         uses: hashicorp/setup-packer@v2
@@ -49,7 +49,7 @@ jobs:
           cd ./02-packer
           packer init .
           packer validate ./flask_ami.pkr.hcl
-          echo "Packer validate completed successfully"
+          echo "NOTE: Packer validate completed successfully."
 
       - name: Build Infrastucture and AMI
         run: |
@@ -58,7 +58,7 @@ jobs:
           export AWS_DEFAULT_REGION="${{ secrets.AWS_REGION }}"
           pwd
           ./apply.sh
-          echo "Build of Infrastructure and AMI completed successfully"
+          echo "NOTE: Build of Infrastructure and AMI completed successfully."
 
       - name: Validate Solution
         run: |
@@ -67,6 +67,7 @@ jobs:
             export AWS_DEFAULT_REGION="${{ secrets.AWS_REGION }}"
             dns_name=$(aws elbv2 describe-load-balancers --query "LoadBalancers[?LoadBalancerName=='challenge-alb'].DNSName" --output text)
             cd ./02-packer/scripts
+            echo "NOTE: Running the provided test program."
             ./test_candidates.py $dns_name
 
           
