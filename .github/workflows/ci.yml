@@ -22,7 +22,7 @@ jobs:
         run: |
             export AWS_ACCESS_KEY_ID="${{ secrets.AWS_ACCESS_KEY_ID }}"
             export AWS_SECRET_ACCESS_KEY="${{ secrets.AWS_SECRET_ACCESS_KEY }}"
-            export AWS_DEFAULT_REGION="us-east-2"
+            export AWS_DEFAULT_REGION="${{ secrets.AWS_REGION }}"
             cd ./01-infrastructure
             terraform init
             terraform validate
@@ -32,7 +32,7 @@ jobs:
         run: |
           export AWS_ACCESS_KEY_ID="${{ secrets.AWS_ACCESS_KEY_ID }}"
           export AWS_SECRET_ACCESS_KEY="${{ secrets.AWS_SECRET_ACCESS_KEY }}"
-          export AWS_DEFAULT_REGION="us-east-2"
+          export AWS_DEFAULT_REGION="${{ secrets.AWS_REGION }}"
           cd ./01-infrastructure
           terraform init
           terraform plan
@@ -45,7 +45,7 @@ jobs:
         run: |
           export AWS_ACCESS_KEY_ID="${{ secrets.AWS_ACCESS_KEY_ID }}"
           export AWS_SECRET_ACCESS_KEY="${{ secrets.AWS_SECRET_ACCESS_KEY }}"
-          export AWS_DEFAULT_REGION="us-east-2"
+          export AWS_DEFAULT_REGION="${{ secrets.AWS_REGION }}"
           cd ./02-packer
           packer init .
           packer validate ./flask_ami.pkr.hcl
@@ -55,7 +55,7 @@ jobs:
         run: |
           export AWS_ACCESS_KEY_ID="${{ secrets.AWS_ACCESS_KEY_ID }}"
           export AWS_SECRET_ACCESS_KEY="${{ secrets.AWS_SECRET_ACCESS_KEY }}"
-          export AWS_DEFAULT_REGION="us-east-2"
+          export AWS_DEFAULT_REGION="${{ secrets.AWS_REGION }}"
           pwd
           ./apply.sh
 
@@ -63,7 +63,7 @@ jobs:
         run: |
             export AWS_ACCESS_KEY_ID="${{ secrets.AWS_ACCESS_KEY_ID }}"
             export AWS_SECRET_ACCESS_KEY="${{ secrets.AWS_SECRET_ACCESS_KEY }}"
-            export AWS_DEFAULT_REGION="us-east-2"
+            export AWS_DEFAULT_REGION="${{ secrets.AWS_REGION }}"
             dns_name=$(aws elbv2 describe-load-balancers --query "LoadBalancers[?LoadBalancerName=='challenge-alb'].DNSName" --output text)
             cd ./02-packer/scripts
             ./test_candidates.py $dns_name
