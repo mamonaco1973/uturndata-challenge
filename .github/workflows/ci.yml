@@ -41,7 +41,7 @@ jobs:
       - name: Setup Packer
         uses: hashicorp/setup-packer@v2
         with:
-            terraform_version: 1.9.2  # Replace with your required version
+            packer_version: 1.9.2  # Replace with your required version
 
       - name: Packer Validate
         run: |
@@ -59,4 +59,4 @@ jobs:
           export AWS_SECRET_ACCESS_KEY="${{ secrets.AWS_SECRET_ACCESS_KEY }}"
           pwd
           ls -al
-          
+
