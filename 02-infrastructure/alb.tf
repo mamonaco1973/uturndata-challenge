@@ -16,7 +16,7 @@ resource "aws_lb_target_group" "challenge_alb_tg" {
   vpc_id      = aws_vpc.challenge-vpc.id
 
   health_check {
-    path                = "/"
+    path                = "/gtg"
     interval            = 10
     timeout             = 5
     healthy_threshold   = 3
