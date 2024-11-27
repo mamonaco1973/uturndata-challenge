@@ -1,0 +1,32 @@
+name: Build uturndata challenge solution
+
+on:
+  push:
+    branches:
+      - main  # Run workflow on push to the main branch
+  workflow_dispatch: 
+    
+jobs:
+  terraform:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3  # Check out your repository
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v2
+        with:
+          terraform_version: 1.5.6  # Replace with your required version
+
+      - name: Terraform Init and Plan
+        run: |
+          cd ./01-infrastructure
+          terraform init
+          terraform plan -out=tfplan
+          echo "Plan completed successfully"
+
+      - name: Terraform Apply
+        if: github.event_name == 'workflow_dispatch'  # Run only if triggered manually
+        run: |
+          cd ./01-infrastructure
+          terraform apply -auto-approve tfplan
