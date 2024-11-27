@@ -4,12 +4,22 @@ packer {
       source  = "github.com/hashicorp/amazon"
       version = "~> 1"
     }
-     
+
     windows-update = {
       source  = "github.com/rgl/windows-update"
       version = "0.15.0"
     }
   }
+}
+
+data "amazon-ami" "linux-base-os-image" {
+  filters = {
+    name                = "al2023-ami-2023*x86_64"
+    root-device-type    = "ebs"
+    virtualization-type = "hvm"
+  }
+  most_recent = true
+  owners      = ["amazon"]
 }
 
 variable "region" {
@@ -20,24 +30,25 @@ variable "instance_type" {
   default = "t2.micro"
 }
 
-variable "source_ami" {
-  default = "ami-0c80e2b6ccb9ad6d1"
+variable "vpc_id" {
+  description = "The ID of the VPC to use"
+  default     = ""  # Replace with your actual VPC ID
 }
 
-variable "ami_name" {
-  default = "flask-server-ami"
+variable "subnet_id" {
+  description = "The ID of the subnet to use"
+  default     = ""  # Replace with your actual subnet id
 }
 
 source "amazon-ebs" "flask_ami" {
   region            = var.region
   instance_type     = var.instance_type
-  source_ami        = var.source_ami
+  source_ami       = "${data.amazon-ami.linux-base-os-image.id}"
   ssh_username      = "ec2-user"
-  ami_name          = var.ami_name
+  ami_name          = "flask_server_ami_${replace(timestamp(), ":", "-")}"
   ssh_interface     = "public_ip"
-  vpc_id            = "vpc-0aa88929e09c955ed"
-  subnet_id         = "subnet-03c39de8f10a86b78"
-  security_group_id = "sg-0948f9b7dd828d5ea"
+  vpc_id            = var.vpc_id
+  subnet_id         = var.subnet_id
 }
 
 build {
