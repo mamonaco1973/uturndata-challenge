@@ -80,6 +80,23 @@ resource "aws_iam_instance_profile" "ec2_instance_profile" {
 #   port             = 8000
 # }
 
+# Define a data source to look up the AMI by name ... use
+# the flask ami is available otherwise use thed default AMI.check "name" 
+
+data "aws_ami" "flask_server" {
+  most_recent = true
+  filter {
+    name   = "name"
+    values = ["flask-server-ami"]
+  }
+  owners = ["self"] # Replace "self" with the actual owner ID if needed
+}
+
+# Use the try function to default to a specific AMI if "flask-server-ami" doesn't exist
+variable "default_ami" {
+  default = "ami-0c80e2b6ccb9ad6d1"
+}
+
 # Create a launch template to create new instances in the autoscaling group
 
 resource "aws_launch_template" "challenge_launch_template" {
@@ -114,7 +131,7 @@ resource "aws_launch_template" "challenge_launch_template" {
 
   instance_type   = "t2.micro"
   key_name        = "challenge-key"
-  image_id        = "ami-0c80e2b6ccb9ad6d1"    
+  image_id        = try(data.aws_ami.flask_server.id, var.default_ami)  
   
   user_data = base64encode(file("./scripts/bootstrap.sh"))
 
