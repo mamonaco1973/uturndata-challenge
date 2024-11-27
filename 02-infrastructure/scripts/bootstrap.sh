@@ -24,7 +24,7 @@ if [ ! -d "/flask" ]; then
     systemctl start httpd
 
 # If /flash exists assume we are running the flask-app AMI and that the 
-# flask-app" service has been installed
+# "flask-app" service has been installed.
 # Get status of flask_app service.
 
 else

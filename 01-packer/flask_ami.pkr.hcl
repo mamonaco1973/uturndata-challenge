@@ -13,7 +13,7 @@ packer {
 }
 
 variable "region" {
-  default = "us-east-2" # Replace with your preferred AWS region
+  default = "us-east-2" 
 }
 
 variable "instance_type" {
