@@ -26,6 +26,7 @@ jobs:
           pwd
           #env
           aws --version
+          aws s3 ls
           # terraform init
           # terraform plan -out=tfplan
           echo "Plan completed successfully"
