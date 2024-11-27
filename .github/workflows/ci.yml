@@ -58,6 +58,7 @@ jobs:
           export AWS_DEFAULT_REGION="${{ secrets.AWS_REGION }}"
           pwd
           ./apply.sh
+          echo "Build of Infrastructure and AMI completed successfully"
 
       - name: Validate Solution
         run: |
